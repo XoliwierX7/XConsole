@@ -3,8 +3,8 @@ loader.lua | by OliwierKaczmarczyk77 | YT:XoliwierX (@oliwier0247) | GitHub:Xoli
 
 ██╗  ██╗ ██████╗ ██████╗ ███╗   ██╗███████╗ ██████╗ ██╗     ███████╗
 ╚██╗██╔╝██╔════╝██╔═══██╗████╗  ██║██╔════╝██╔═══██╗██║     ██╔════╝
-╚███╔╝ ██║     ██║   ██║██╔██╗ ██║███████╗██║   ██║██║     █████╗  
-██╔██╗ ██║     ██║   ██║██║╚██╗██║╚════██║██║   ██║██║     ██╔══╝  
+ ╚███╔╝ ██║     ██║   ██║██╔██╗ ██║███████╗██║   ██║██║     █████╗  
+ ██╔██╗ ██║     ██║   ██║██║╚██╗██║╚════██║██║   ██║██║     ██╔══╝  
 ██╔╝ ██╗╚██████╗╚██████╔╝██║ ╚████║███████║╚██████╔╝███████╗███████╗
 ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝
 				2025© OliwierKaczmarczyk77
@@ -13,11 +13,11 @@ loader.lua | by OliwierKaczmarczyk77 | YT:XoliwierX (@oliwier0247) | GitHub:Xoli
 -- Adding Loading Gui objects
 
 local player = game.Players.LocalPlayer
-local pgui = player.WaitForChild("PlayerGui")
+local pgui = player:WaitForChild("PlayerGui")
 
 local LoadGui = Instance.new("ScreenGui")
 LoadGui.Name = "LoadGui"
-LoadGui.IgnoreGuiInset = true -- Opcjonalnie: ignoruje górny pasek Roblox
+LoadGui.IgnoreGuiInset = true 
 LoadGui.Parent = pgui
 
 local Button = Instance.new("TextButton")
@@ -26,14 +26,15 @@ Button.Parent = LoadGui
 Button.Text = "Uruchom XCONSOLE"
 Button.TextScaled = true
 Button.TextColor3 = Color3.fromRGB(197, 241, 255)
-Button.BackgroundColor3 = Color3.fromRGB(197, 241, 255)
+-- POPRAWKA: BackgroundColor3 zamiast BackgroundColor
+Button.BackgroundColor3 = Color3.fromRGB(30, 30, 30) 
 Button.Size = UDim2.new(0.25, 0, 0.1, 0)
 Button.Position = UDim2.new(0.5, 0, 0.9, 0)
 Button.Font = Enum.Font.PressStart2P
 Button.AnchorPoint = Vector2.new(0.5, 0.5)
 
 local stroke1 = Instance.new("UIStroke")
-stroke1.Name = "stroke"
+stroke1.Name = "stroke1"
 stroke1.Color = Color3.fromRGB(255, 255, 255)
 stroke1.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 stroke1.LineJoinMode = Enum.LineJoinMode.Miter
@@ -41,7 +42,7 @@ stroke1.Thickness = 3
 stroke1.Parent = Button
 
 local stroke2 = Instance.new("UIStroke")
-stroke2.Name = "stroke"
+stroke2.Name = "stroke2"
 stroke2.Color = Color3.fromRGB(0, 170, 255)
 stroke2.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 stroke2.LineJoinMode = Enum.LineJoinMode.Miter
@@ -75,7 +76,6 @@ text.BackgroundTransparency = 1
 text.Parent = Frame
 text.Text = "Kliknij ten przycisk, aby uruchomić XCONSOLE"
 text.Font = Enum.Font.PressStart2P
-text.FontFace.Bold = true
 text.TextColor3 = Color3.fromRGB(197, 241, 255)
 text.TextScaled = true
 text.Size = UDim2.new(1, 0, 1, 0)
@@ -113,7 +113,6 @@ load.Size = UDim2.new(1, 0, 1, 0)
 load.BackgroundTransparency = 1
 load.Parent = bar
 load.Font = Enum.Font.PressStart2P
-load.FontFace.Bold = true
 load.TextColor3 = Color3.fromRGB(197, 241, 255)
 load.TextScaled = true
 
@@ -125,176 +124,80 @@ stroke4.LineJoinMode = Enum.LineJoinMode.Miter
 stroke4.Thickness = 5
 stroke4.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 
-local i1 = Instance.new("ImageLabel")
-i1.Name = "1"
-i1.Parent = LoadGui
-i1.AnchorPoint = Vector2.new(0.5, 0.5)
-i1.BackgroundTransparency = 1
-i1.Position = UDim2.new(0.5, 0, -1.5, 0)
-i1.Size = UDim2.new(0.5, 0, 0.5, 0)
-i1.Image = "rbxassetid://114635592250094"
-i1.ScaleType = Enum.ScaleType.Fit
+-- ImageLabels i1-i7 (tworzenie obiektów)
+local function CreateIL(n, id, pos)
+    local i = Instance.new("ImageLabel")
+    i.Name = n
+    i.Parent = LoadGui
+    i.AnchorPoint = Vector2.new(0.5, 0.5)
+    i.BackgroundTransparency = 1
+    i.Position = pos
+    i.Size = UDim2.new(0.5, 0, 0.5, 0)
+    i.Image = "rbxassetid://"..id
+    i.ScaleType = Enum.ScaleType.Fit
+    i.Visible = (n ~= "7")
+    return i
+end
 
-local i2 = Instance.new("ImageLabel")
-i2.Name = "2"
-i2.Parent = LoadGui
-i2.AnchorPoint = Vector2.new(0.5, 0.5)
-i2.BackgroundTransparency = 1
-i2.Position = UDim2.new(-1.5, 0, 0.5, 0)
-i2.Size = UDim2.new(0.5, 0, 0.5, 0)
-i2.Image = "rbxassetid://123826500976153"
-i2.ScaleType = Enum.ScaleType.Fit
-
-local i3 = Instance.new("ImageLabel")
-i3.Name = "3"
-i3.Parent = LoadGui
-i3.AnchorPoint = Vector2.new(0.5, 0.5)
-i3.BackgroundTransparency = 1
-i3.Position = UDim2.new(0.5, 0, 1.5, 0)
-i3.Size = UDim2.new(0.5, 0, 0.5, 0)
-i3.Image = "rbxassetid://91432139016649"
-i3.ScaleType = Enum.ScaleType.Fit
-
-local i4 = Instance.new("ImageLabel")
-i4.Name = "4"
-i4.Parent = LoadGui
-i4.AnchorPoint = Vector2.new(0.5, 0.5)
-i4.BackgroundTransparency = 1
-i4.Position = UDim2.new(1.5, 0, 0.5, 0)
-i4.Size = UDim2.new(0.5, 0, 0.5, 0)
-i4.Image = "rbxassetid://120453913835721"
-i4.ScaleType = Enum.ScaleType.Fit
-
-local i5 = Instance.new("ImageLabel")
-i5.Name = "5"
-i5.Parent = LoadGui
-i5.AnchorPoint = Vector2.new(0.5, 0.5)
-i5.BackgroundTransparency = 1
-i5.Position = UDim2.new(0.5, 0, -1.5, 0)
-i5.Size = UDim2.new(0.5, 0, 0.5, 0)
-i5.Image = "rbxassetid://92355390708306"
-i5.ScaleType = Enum.ScaleType.Fit
-
-local i6 = Instance.new("ImageLabel")
-i6.Name = "6"
-i6.Parent = LoadGui
-i6.AnchorPoint = Vector2.new(0.5, 0.5)
-i6.BackgroundTransparency = 1
-i6.Position = UDim2.new(0.5, 0, 1.5, 0)
-i6.Size = UDim2.new(0.5, 0, 0.5, 0)
-i6.Image = "rbxassetid://137924578693253"
-i6.ScaleType = Enum.ScaleType.Fit
-
-local i7 = Instance.new("ImageLabel")
-i7.Name = "7"
-i7.Parent = LoadGui
-i7.AnchorPoint = Vector2.new(0.5, 0.5)
-i7.BackgroundTransparency = 1
-i7.Position = UDim2.new(0.5, 0, 0.5, 0)
-i7.Size = UDim2.new(0.5, 0, 0.5, 0)
-i7.Image = "rbxassetid://129327555484382"
-i7.ScaleType = Enum.ScaleType.Fit
+local i1 = CreateIL("1", "114635592250094", UDim2.new(0.5, 0, -1.5, 0))
+local i2 = CreateIL("2", "123826500976153", UDim2.new(-1.5, 0, 0.5, 0))
+local i3 = CreateIL("3", "91432139016649", UDim2.new(0.5, 0, 1.5, 0))
+local i4 = CreateIL("4", "120453913835721", UDim2.new(1.5, 0, 0.5, 0))
+local i5 = CreateIL("5", "92355390708306", UDim2.new(0.5, 0, -1.5, 0))
+local i6 = CreateIL("6", "137924578693253", UDim2.new(0.5, 0, 1.5, 0))
+local i7 = CreateIL("7", "129327555484382", UDim2.new(0.5, 0, 0.5, 0))
 i7.Visible = false
 
--- Finally Scripts
-
--- LOADGUI/Button/LOCALSCRIPT.LUA
-
-local function onMouseEnter()
-	Frame.Visible = true
-end
-
--- Funkcja, która uruchomi się, gdy kursor opuści przycisk
-local function onMouseLeave()
-	Frame.Visible = false
-end
-
--- Podłączenie funkcji do zdarzeń
-Button.MouseEnter:Connect(onMouseEnter)
-Button.MouseLeave:Connect(onMouseLeave)
-
--- LOADGUI/LOCALSCRIPT.LUA
+-- Finally Scripts Logic
 
 local TweenService = game:GetService("TweenService")
 
--- Tabela z konfiguracją animacji
-local sequence = {
-	{name = "1", startPos = UDim2.new(0.5, 0, -1.5, 0)},
-	{name = "2", startPos = UDim2.new(-1.5, 0, 0.5, 0)},
-	{name = "3", startPos = UDim2.new(0.5, 0, 1.5, 0)},
-	{name = "4", startPos = UDim2.new(1.5, 0, 0.5, 0)},
-	{name = "5", startPos = UDim2.new(0.5, 0, -1.5, 0)},
-	{name = "6", startPos = UDim2.new(0.5, 0, 1.5, 0)},
-}
+-- Hover logic for button
+Button.MouseEnter:Connect(function() Frame.Visible = true end)
+Button.MouseLeave:Connect(function() Frame.Visible = false end)
 
-local targetPos = UDim2.new(0.5, 0, 0.5, 0)
-local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-
--- Ustawienia początkowe
-i7.Visible = false
-bar.Visible = false
-bg.Position = UDim2.new(0.5, 0, -1.5, 0) -- Ustawiamy bg poza ekranem na starcie
-
+-- Main Sequence
 Button.MouseButton1Click:Connect(function()
-	-- 1. Przycisk znika
 	Button.Visible = false
+    Frame.Visible = false
 
-	-- 0. Animacja wjazdu ramki "bg"
+	local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
 	local bgTween = TweenService:Create(bg, tweenInfo, {Position = UDim2.new(0.5, 0, 0.5, 0)})
 	bgTween:Play()
-	bgTween.Completed:Wait() -- Czekamy, aż tło wjedzie, zanim ruszą cyfry
+	bgTween.Completed:Wait()
 
-	-- 2. Sekwencja ruchów 1-6
 	for _, data in ipairs(sequence) do
 		local label = LoadGui:FindFirstChild(data.name)
 		if label and label:IsA("ImageLabel") then
 			label.Position = data.startPos
 			label.Visible = true
-
 			local tween = TweenService:Create(label, tweenInfo, {Position = targetPos})
 			tween:Play()
 			tween.Completed:Wait() 
+            label.Visible = false -- Ukrywamy poprzedni po animacji
 		end
 	end
 
-	-- 3. Elementy 1-6 znikają
-	for i = 1, 6 do
-		local label = LoadGui:FindFirstChild(tostring(i))
-		if label then
-			label.Visible = false
-		end
-	end
-
-	-- 4. Pojawia się "7" i "bar"
 	i7.Visible = true
 	bar.Visible = true
 end)
 
--- LOADGUI/BUTTON/LOCALSCRIPT.LUA
-
-local btn = Button
-local ts = game:GetService("TweenService")
-
-local size = btn.Size
-
-btn.MouseEnter:Connect(function()
-	ts:Create(btn, TweenInfo.new(.1), {Size = UDim2.new(size.X.Scale*1.2,size.X.Offset*1.2,size.Y.Scale*1.2,size.X.Offset*1.2)}):Play()
+-- Button Effects
+local btnSize = Button.Size
+Button.MouseEnter:Connect(function()
+	TweenService:Create(Button, TweenInfo.new(.1), {Size = UDim2.new(btnSize.X.Scale*1.2, 0, btnSize.Y.Scale*1.2, 0)}):Play()
+end)
+Button.MouseLeave:Connect(function()
+	TweenService:Create(Button, TweenInfo.new(.1), {Size = btnSize}):Play()
+end)
+Button.MouseButton1Down:Connect(function()
+	TweenService:Create(Button, TweenInfo.new(.1), {Size = UDim2.new(btnSize.X.Scale*0.8, 0, btnSize.Y.Scale*0.8, 0)}):Play()
+end)
+Button.MouseButton1Up:Connect(function()
+	TweenService:Create(Button, TweenInfo.new(.1), {Size = UDim2.new(btnSize.X.Scale*1.2, 0, btnSize.Y.Scale*1.2, 0)}):Play()
 end)
 
-btn.MouseLeave:Connect(function()
-	ts:Create(btn, TweenInfo.new(.1), {Size = size}):Play()
-end)
-
-btn.MouseButton1Down:Connect(function()
-	ts:Create(btn, TweenInfo.new(.1), {Size = UDim2.new(size.X.Scale*0.8,size.X.Offset*0.8,size.Y.Scale*0.8,size.X.Offset*0.8)}):Play()
-end)
-
-btn.MouseButton1Up:Connect(function()
-	ts:Create(btn, TweenInfo.new(.1), {Size = UDim2.new(size.X.Scale*1.2,size.X.Offset*1.2,size.Y.Scale*1.2,size.X.Offset*1.2)}):Play()
-end)
-
--- LOADGUI/BAR/TEXTLABEL/LOCALSCRIPT.LUA
-
+-- Loading Dots Animation
 task.spawn(function()
 	while true do
 		load.Text = "Trwa uruchamianie XCONSOLE."
@@ -305,5 +208,3 @@ task.spawn(function()
 		task.wait(0.3)
 	end
 end)
-
--- END
