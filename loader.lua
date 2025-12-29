@@ -15,8 +15,9 @@ loader.lua | by OliwierKaczmarczyk77 | YT:XoliwierX (@oliwier0247) | GitHub:Xoli
 local player = game.Players.LocalPlayer
 local pgui = player.WaitForChild("PlayerGui")
 
-local LoadGui = Instance.new("LoadGui")
+local LoadGui = Instance.new("ScreenGui")
 LoadGui.Name = "LoadGui"
+LoadGui.IgnoreGuiInset = true -- Opcjonalnie: ignoruje górny pasek Roblox
 LoadGui.Parent = pgui
 
 local Button = Instance.new("TextButton")
@@ -25,7 +26,7 @@ Button.Parent = LoadGui
 Button.Text = "Uruchom XCONSOLE"
 Button.TextScaled = true
 Button.TextColor3 = Color3.fromRGB(197, 241, 255)
-Button.BackgroundColor = Color3.fromRGB(197, 241, 255)
+Button.BackgroundColor3 = Color3.fromRGB(197, 241, 255)
 Button.Size = UDim2.new(0.25, 0, 0.1, 0)
 Button.Position = UDim2.new(0.5, 0, 0.9, 0)
 Button.Font = Enum.Font.PressStart2P
@@ -198,6 +199,7 @@ i7.Visible = false
 -- Finally Scripts
 
 -- LOADGUI/Button/LOCALSCRIPT.LUA
+
 local function onMouseEnter()
 	Frame.Visible = true
 end
@@ -268,17 +270,6 @@ Button.MouseButton1Click:Connect(function()
 	bar.Visible = true
 end)
 
--- LOADGUI/BAR/TEXTLABEL/LOCALSCRIPT.LUA
-
-while true do
-	load.Text = "Trwa uruchamianie XCONSOLE."
-	task.wait(0.3)
-	load.Text = "Trwa uruchamianie XCONSOLE.."
-	task.wait(0.3)
-	load.Text = "Trwa uruchamianie XCONSOLE..."
-	task.wait(0.3)
-end
-
 -- LOADGUI/BUTTON/LOCALSCRIPT.LUA
 
 local btn = Button
@@ -300,6 +291,19 @@ end)
 
 btn.MouseButton1Up:Connect(function()
 	ts:Create(btn, TweenInfo.new(.1), {Size = UDim2.new(size.X.Scale*1.2,size.X.Offset*1.2,size.Y.Scale*1.2,size.X.Offset*1.2)}):Play()
+end)
+
+-- LOADGUI/BAR/TEXTLABEL/LOCALSCRIPT.LUA
+
+task.spawn(function()
+	while true do
+		load.Text = "Trwa uruchamianie XCONSOLE."
+		task.wait(0.3)
+		load.Text = "Trwa uruchamianie XCONSOLE.."
+		task.wait(0.3)
+		load.Text = "Trwa uruchamianie XCONSOLE..."
+		task.wait(0.3)
+	end
 end)
 
 -- END
